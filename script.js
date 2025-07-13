@@ -78,10 +78,16 @@ document.getElementById("cadastroForm").addEventListener("submit", async functio
     return;
   }
 
-  // Salvar inscrição
-  inscricoes.push(novaInscricao);
-  localStorage.setItem("inscricoes", JSON.stringify(inscricoes));
-
+  // Enviar para Google Sheets via fetch POST
+fetch("https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec", {
+  method: "POST",
+  body: JSON.stringify(novaInscricao)
+})
+.then(res => {
   document.getElementById("mensagem").innerText = "Inscrição enviada com sucesso!";
-  this.reset();
+  document.getElementById("cadastroForm").reset();
+})
+.catch(err => {
+  console.error("Erro ao enviar:", err);
+  document.getElementById("mensagem").innerText = "Erro ao enviar inscrição.";
 });
