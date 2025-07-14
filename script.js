@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function carregarCursos(serie) {
     const curso1 = document.getElementById("curso1");
     const curso2 = document.getElementById("curso2");
+
     curso1.innerHTML = "";
     curso2.innerHTML = "";
 
@@ -51,11 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const novaInscricao = { nome, matricula, serie, curso1, curso2 };
 
-    // Verificação de vagas antes de enviar
-   const url = `https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
+    const url = `https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
 
-
-    fetch(https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec)
+    fetch(url)
       .then(res => res.json())
       .then(vagas => {
         if (vagas.curso1Restantes <= 0 || vagas.curso2Restantes <= 0) {
@@ -66,17 +65,17 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Se houver vaga, enviar inscrição via POST
+        // Envia inscrição
         fetch("https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec", {
           method: "POST",
           body: JSON.stringify(novaInscricao)
         })
-          .then(res => {
+          .then(() => {
             document.getElementById("mensagem").innerText = "Inscrição enviada com sucesso!";
             document.getElementById("cadastroForm").reset();
           })
           .catch(err => {
-            console.error("Erro ao enviar:", err);
+            console.error("Erro ao enviar inscrição:", err);
             document.getElementById("mensagem").innerText = "Erro ao enviar inscrição.";
           });
       })
