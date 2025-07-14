@@ -55,18 +55,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const novaInscricao = { nome, matricula, serie, curso1, curso2 };
 
-    // Enviar para Google Sheets
+   // Verificar vagas antes de enviar
+const url = `https://script.google.com/macros/s/SEU_LINK/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
+
+fetch(url)
+  .then(res => res.json())
+  .then(vagas => {
+    if (vagas.curso1Restantes <= 0 || vagas.curso2Restantes <= 0) {
+      let mensagem = "Não há vagas disponíveis para:\n";
+      if (vagas.curso1Restantes <= 0) mensagem += `- ${curso1}\n`;
+      if (vagas.curso2Restantes <= 0) mensagem += `- ${curso2}`;
+      document.getElementById("mensagem").innerText = mensagem;
+      return;
+    }
+
+    // Envia para o Google Sheets se houver vaga
     fetch("https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec", {
       method: "POST",
       body: JSON.stringify(novaInscricao)
     })
-    .then(res => {
-      document.getElementById("mensagem").innerText = "Inscrição enviada com sucesso!";
-      document.getElementById("cadastroForm").reset();
-    })
-    .catch(err => {
-      console.error("Erro ao enviar:", err);
-      document.getElementById("mensagem").innerText = "Erro ao enviar inscrição.";
-    });
+      .then(res => {
+        document.getElementById("mensagem").innerText = "Inscrição enviada com sucesso!";
+        document.getElementById("cadastroForm").reset();
+      })
+      .catch(err => {
+        console.error("Erro ao enviar:", err);
+        document.getElementById("mensagem").innerText = "Erro ao enviar inscrição.";
+      });
+  })
+  .catch(err => {
+    console.error("Erro ao verificar vagas:", err);
+    document.getElementById("mensagem").innerText = "Erro ao verificar vagas.";
   });
-});
