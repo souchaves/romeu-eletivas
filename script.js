@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
    const url = `https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
 
 
-    fetch(url)
+    fetch(https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec)
       .then(res => res.json())
       .then(vagas => {
         if (vagas.curso1Restantes <= 0 || vagas.curso2Restantes <= 0) {
