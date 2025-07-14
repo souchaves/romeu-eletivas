@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Cursos disponíveis (dados fixos no JS)
   const cursosData = {
     "1": [
       { "nome": "Teatro", "vagas": 20 },
@@ -11,11 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
-  // Carrega cursos ao escolher série
   function carregarCursos(serie) {
     const curso1 = document.getElementById("curso1");
     const curso2 = document.getElementById("curso2");
-
     curso1.innerHTML = "";
     curso2.innerHTML = "";
 
@@ -54,9 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const novaInscricao = { nome, matricula, serie, curso1, curso2 };
 
-    // Verificar vagas antes de enviar
+    // Verificação de vagas antes de enviar
     const url = `https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
-
 
     fetch(url)
       .then(res => res.json())
@@ -69,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        // Envia para o Google Sheets se houver vaga
+        // Se houver vaga, enviar inscrição via POST
         fetch("https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec", {
           method: "POST",
           body: JSON.stringify(novaInscricao)
