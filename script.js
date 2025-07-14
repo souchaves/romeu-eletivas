@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const novaInscricao = { nome, matricula, serie, curso1, curso2 };
 
-    const url = `https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
+    const url = `https://script.google.com/macros/s/AKfycbw39249PXac_lNMWYlmFGrB_L0FGaci-sxpdtGPsAgX7ymEaPNL2w8j5MSZwNg9UyU/exec?serie=${serie}&curso1=${encodeURIComponent(curso1)}&curso2=${encodeURIComponent(curso2)}`;
 
     fetch(url)
       .then(res => res.json())
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Envia inscrição
-        fetch("https://script.google.com/a/macros/prof.ce.gov.br/s/AKfycbzCJ_OiFAP0cfhxJdORMl4wzz2V_q7KTh8Eh-Q3RLXAOztz9y2hMOvR4lRMNJITYsiY/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbw39249PXac_lNMWYlmFGrB_L0FGaci-sxpdtGPsAgX7ymEaPNL2w8j5MSZwNg9UyU/exec", {
           method: "POST",
           body: JSON.stringify(novaInscricao)
         })
